@@ -1,15 +1,13 @@
-import 'dotenv/config';
-
+import "dotenv/config";
 import express from "express";
 
 import connectDB from "./db/conn.js";
+import grades from "./routes/grades.js";
 
 const PORT = 3000;
 const app = express();
 
 await connectDB();
-
-import grades from "./routes/grades.js";
 
 app.use(express.json());
 
@@ -20,7 +18,8 @@ app.get("/", (req, res) => {
 app.use("/grades", grades);
 
 // Global error handling
-app.use((err, _req, res, next) => {
+app.use((err, req, res, next) => {
+  console.error(err);
   res.status(500).send("Seems like we messed up somewhere...");
 });
 
